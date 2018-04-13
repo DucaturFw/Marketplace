@@ -59,6 +59,7 @@
     "react-dom": "^16.2.0",
     "react-fontawesome": "^1.6.1",
     "react-markdown": "^3.3.0",
+    "react-modal": "^3.3.2",
     "react-router-dom": "^4.2.2",
     "simplemde": "^1.11.2",
     "style-loader": "^0.20.3",

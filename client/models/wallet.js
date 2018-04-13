@@ -4,18 +4,33 @@ const JOIN_ADDR = '0xad2870197485a3f0ecbfdbd9de54ab90905df2de';
 
 class Wallet {
   constructor() {
-    // eslint-disable-next-line
-    this.web3 = new Web3(web3.currentProvider);
+    this.initMetaMask();
+  }
+
+  initMetaMask() {
+    if (typeof web3 == 'undefined') {
+      this.state = null;
+    } else if (web3.version.network == 'loading') {
+      this.state = 'wrong';
+    } else {
+      // eslint-disable-next-line
+      this.web3 = new Web3(web3.currentProvider);
+      this.state = 'good';
+    }
+  }
+
+  isHaveMetaMast() {
+    return !!this.web3;
+  }
+
+  isAuth() {
+    return !!this.getAddr();
   }
 
   getAddr() {
     if (this.web3.eth.accounts && this.web3.eth.accounts.length > 0) {
       return this.web3.eth.accounts[0];
     }
-  }
-
-  hasAddr() {
-    return !!this.getAddr();
   }
 
   send(amount) {
@@ -25,7 +40,7 @@ class Wallet {
       value: this.web3.toWei(amount)
     }
 
-    if (this.hasAddr()) {
+    if (this.isAuth()) {
       this.web3.eth.sendTransaction(tx,
         function (err, transactionHash) {
           if (!err) {

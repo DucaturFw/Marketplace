@@ -7,14 +7,15 @@ import axios from 'axios';
 export default class Marketplace extends Component {
 
   state = {
-    oracles: []
+    oracles: [],
+    isLoaded: false,
   }
 
   componentDidMount() {
     axios.get(`/api/oracle`).then(res => {
       const { oracles } = res.data;
 
-      this.setState({ oracles });
+      this.setState({ oracles, isLoaded: true });
     });
   }
 
@@ -29,7 +30,7 @@ export default class Marketplace extends Component {
             <SmallTitle>
               {item.title}
             </SmallTitle>
-            <Icon name="bitcoin" size="4x" />
+            <Icon name="bitcoin" size="4x" color="gray" />
           </Item>
         </StyleLink>
       );
@@ -37,6 +38,21 @@ export default class Marketplace extends Component {
   }
 
   render() {
+
+    if (!this.state.isLoaded) {
+      return (
+        <Content>
+          <Title style={{ marginTop: '150px' }}>
+            <Icon
+              name={'spinner'}
+              size={'2x'}
+              spin
+            />
+          </Title>
+        </Content>
+      )
+    }
+
     return (
       <div>
         <Content>
@@ -68,7 +84,7 @@ const Item = styled.div`
   animation-delay: ${props => (props.delay ? props.delay * 0.05 : 0)}s;
 `;
 const Icon = styled(FontAwesome) `
-  color: ${props => props.theme.color.icons.main};
+  color: ${props => props.color && props.color === 'gray' ? props.theme.color.icons.main : props.theme.color.background.main};
   text-decoration: none;
 `;
 

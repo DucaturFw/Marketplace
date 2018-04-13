@@ -6,6 +6,7 @@ import axios from 'axios';
 import Editor from '../elements/Editor';
 import Btn from '../elements/btn';
 
+import NoMetaMask from '../elements/NoMetaMask';
 import wallet from '../../models/wallet';
 
 export default class Oracule extends Component {
@@ -30,27 +31,37 @@ export default class Oracule extends Component {
   };
 
   onSubmit = () => {
-    const { title, description, email } = this.state;
+    if (wallet.isHaveMetaMast() && wallet.isAuth()) {
+      const { title, description, email } = this.state;
 
-    axios
-      .post('/api/oracle', {
-        title,
-        description,
-        email
-      })
-      .then(res => {
-        this.setState(
-          state => ({
-            ...state,
-            ...res.data,
-            done: true
-          }),
-          () => {
-            wallet.send(1);
-          }
-        );
-      });
+      axios
+        .post('/api/oracle', {
+          title,
+          description,
+          email
+        })
+        .then(res => {
+          this.setState(
+            state => ({
+              ...state,
+              ...res.data,
+              done: true
+            }),
+            () => {
+              wallet.send(1);
+            }
+          );
+        });
+    }
   };
+
+  getJoinText() {
+    if (wallet.isAuth()) {
+      return 'Create';
+    } else {
+      return 'Sign up to Create'
+    }
+  }
 
   render() {
     if (this.state.done) {
@@ -63,12 +74,13 @@ export default class Oracule extends Component {
 
     return (
       <Content>
+        <NoMetaMask />
         <Title>Create new pull oracles</Title>
         <Input onChange={this.onTitleChange} placeholder="Title" />
         <Input onChange={this.onEmailChange} placeholder="Email" />
         <Editor canEdit={false} onChange={this.onEditChange} />
         <div>
-          <Btn title={'Create'} onClick={this.onSubmit} />
+          <Btn title={this.getJoinText()} onClick={this.onSubmit} />
         </div>
       </Content>
     );
