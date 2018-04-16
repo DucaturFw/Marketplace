@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import './styles/styles.css';
@@ -9,6 +9,7 @@ import Header from './components/header';
 import Ledger from './components/ledger';
 import Oracle from './components/oracle';
 import Footer from './components/footer';
+import Buy from './components/oracle/buy';
 
 export default class App extends Component {
   render() {
@@ -19,7 +20,10 @@ export default class App extends Component {
             <Header />
             <Main>
               <Route exact path={'/'} component={Ledger} />
-              <Route path={'/oracle/:id'} component={Oracle} />
+              <Switch>
+                <Route path={'/patent/:id/buy'} component={Buy} />
+                <Route path={'/patent/:id'} component={Oracle} />
+              </Switch>
             </Main>
             <Footer />
           </Container>

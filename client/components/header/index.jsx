@@ -15,12 +15,12 @@ export default class Header extends Component {
             <Left>
               <StyleLink to={'/'}>
                 <Logo />
-                <Title>Ducatur</Title>
+                <Title>Роспатент</Title>
               </StyleLink>
             </Left>
             <Right>
               <StyleLink
-                to={'/oracle/new'}
+                to={'/patent/new'}
               >
                 <AddOracle>
                   <HoverIcon name="plus-circle" size="2x" />
@@ -50,8 +50,12 @@ const Inner = styled.div`
 
 const Title = styled.h3`
   margin-left: 15px;
-  margin-top: 14px;
+  margin-top: 10px;
   font-weight: 400;
+  font-family: 'ClearSans Bold',Helvetica,sans-serif;
+  font-size: 30px;
+  line-height: 29px;
+
 `;
 
 const Left = styled.div`

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-export default function Main({ onClick, title }) {
-  return <Action onClick={onClick}>{title}</Action>;
+export default function Main({ onClick, title, style }) {
+  return <Action onClick={onClick} style={style}>{title}</Action>;
 }
 
 const Action = styled.div`

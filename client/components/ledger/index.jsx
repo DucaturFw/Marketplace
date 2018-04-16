@@ -12,7 +12,7 @@ export default class Marketplace extends Component {
 
   componentDidMount() {
     axios.get(`/api/oracle`).then(res => {
-      const { oracles } = res.data;
+      let { oracles } = res.data;
 
       this.setState({ oracles });
     });
@@ -23,13 +23,15 @@ export default class Marketplace extends Component {
       return (
         <StyleLink
           key={idx}
-          to={`/oracle/${item.id}`}
+          to={`/patent/${item.id}`}
         >
           <Item delay={idx}>
+            <PatentNumber>
+              ПАТЕНТ №{item.patent_id}
+            </PatentNumber>
             <SmallTitle>
               {item.title}
             </SmallTitle>
-            <Icon name="bitcoin" size="4x" />
           </Item>
         </StyleLink>
       );
@@ -40,7 +42,7 @@ export default class Marketplace extends Component {
     return (
       <div>
         <Content>
-          <Title>Oracles Ledger</Title>
+          <Title>Список патентов</Title>
         </Content>
         <List>{this.items}</List>
       </div>
@@ -57,8 +59,7 @@ const List = styled.div`
 const Item = styled.div`
   position: relative;
   height: 150px;
-  background-color: ${props => props.theme.color.background.gray};
-  display: flex;
+  background-color: ${props => props.theme.color.background.gray};  
   justify-content: center;
   align-items: center;
 
@@ -66,6 +67,13 @@ const Item = styled.div`
   transform: translateY(2.4rem);
   animation: oracleCardIn 0.25s cubic-bezier(0.06, 0.67, 0.37, 0.99) forwards;
   animation-delay: ${props => (props.delay ? props.delay * 0.05 : 0)}s;
+  
+  grid-template-columns: 10px auto 10px;
+  grid-template-rows: 20px auto 10px;
+
+  padding: 1px;  
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 const Icon = styled(FontAwesome) `
   color: ${props => props.theme.color.icons.main};
@@ -83,18 +91,18 @@ const Title = styled.h1`
   font-size: 4rem;
 `;
 
-const SmallTitle = styled.h4`
-  position: absolute;
+const PatentNumber = styled.h4`
+  margin-top: 10px;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: inherit;
   text-decoration: none;
 
-  top: 5px;
-  width: 100%;
-
-  z-index: 1;
 `;
+const SmallTitle = styled.div`
+  margin-top: 10px;
+  text-align: center;
+`
 
 const StyleLink = styled(Link) `
   text-decoration: none;

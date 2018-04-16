@@ -1,5 +1,6 @@
 // Postgres
 const pg = require('../config/db');
+const oracles = require('./mock');
 const pgp = require('pg-promise')();
 const db = pgp(pg);
 
@@ -21,9 +22,9 @@ module.exports = {
     });
   },
   get: function(id) {
-    return db.one('SELECT * FROM oracles WHERE id = $1', [id]);
+    return oracles.filter(x => x.id == id)[0];
   },
   all: function() {
-    return db.any('SELECT * FROM oracles');
+    return oracles;
   }
 };

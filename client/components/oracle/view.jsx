@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import FontAwesome from 'react-fontawesome';
 import ReactMarkdown from 'react-markdown';
@@ -8,8 +9,6 @@ import Editor from '../elements/Editor';
 import Btn from '../elements/btn';
 
 import wallet from '../../models/wallet';
-
-const CONTRACT_URL = 'https://raw.githubusercontent.com/DucaturFw/elastico/master/contracts/elastico.sol';
 
 export default class Oracule extends Component {
   state = {
@@ -28,34 +27,18 @@ export default class Oracule extends Component {
       this.setState(state => ({
         ...state,
         isLoaded: true,
-        ...res.data
+        ...res.data,
       }));
     });
-
-    axios.get(CONTRACT_URL).then(res => {
-      this.setCode(res.data);
-    })
   }
-
-  onJoin = () => {
-    wallet.send(0.1);
-  };
 
   onBuy = () => {
     this.setState(state => ({
       ...state,
       showContrcat: true
     }));
-    document.getElementById('remix').contentWindow.location.reload();
   };
 
-  setCode(code) {
-    const filename = 'custom.sol';
-    const config = `{"left-offset":205,"right-offset":252,"terminal-top-offset":694,"currentFile":"browser/${filename}","autoCompile":false}`;
-
-    window.localStorage.setItem(`sol:${filename}`, code);
-    window.localStorage.setItem('sol:.remix.config', config);
-  }
 
   render() {
     const { id } = this.props;
@@ -76,20 +59,17 @@ export default class Oracule extends Component {
 
     return (
       <Content>
-        <Title>Oracle: {id}</Title>
-        <Header>{this.state.title}</Header>
-        <Header>{this.state.email}</Header>
-        <ReactMarkdown source={this.state.description} />
+        <Title>ПАТЕНТ №{id}</Title>
+        <Title>{this.state.title}</Title>
         <Actions>
-          <Btn title={'Join'} onClick={this.onJoin} />
-          <Btn title={'Buy'} onClick={this.onBuy} />
+          <Link to={`/patent/${id}/buy`} style={{ textDecoration: 'none' }}><Btn title={'ОТПРАВИТЬ ЗАЯВКУ В РОСПАТЕНТ'} style={{width: '400px'}}/></Link>
         </Actions>
-        <Popover show={this.state.showContrcat}>
-          <IDE
-            id="remix"
-            src={'/browser-solidity/#version=soljson-v0.4.18+commit.9cf6e910.js'}
-          />
-        </Popover>
+        <Description dangerouslySetInnerHTML={{__html: this.state.description}}></Description>
+        <ReactMarkdown />
+        <Actions>
+          <Btn title={'ОТПРАВИТЬ ЗАЯВКУ В РОСПАТЕНТ'} onClick={this.onBuy} style={{width: '400px'}}/>
+        </Actions>
+        
       </Content>
     );
   }
@@ -103,6 +83,8 @@ const Icon = styled(FontAwesome) `
 const Content = styled.div`
   padding-top: 20px;
   box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 88rem;
 `;
 
 const Title = styled.h1`
@@ -126,6 +108,7 @@ const Header = styled.div`
 const Actions = styled.div`
   margin-top: 50px;
   display: flex;
+  justify-content: center;
 `;
 
 const Popover = styled.div`
@@ -142,4 +125,9 @@ const Popover = styled.div`
 const IDE = styled.iframe`
   width: 100%;
   height: 100%;
+`;
+
+const Description = styled.div`
+  margin-top: 40px;
+  text-indent: 5mm;
 `;

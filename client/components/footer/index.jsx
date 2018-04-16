@@ -14,40 +14,40 @@ export default class Footer extends Component {
             <Left>
               <List>
                 <Item>
-                  <Linker>Ledger</Linker>
+                  <Linker>Патенты</Linker>
                 </Item>
                 <Item>
-                  <Linker>FAQs</Linker>
+                  <Linker>Вопросы</Linker>
                 </Item>
                 <Item>
-                  <Linker>HELP</Linker>
+                  <Linker>Помощь</Linker>
                 </Item>
                 <Item>
-                  <Linker>Support</Linker>
+                  <Linker>Поддержка</Linker>
                 </Item>
               </List>
               <List>
                 <Item>
-                  <Linker>About</Linker>
+                  <Linker>О компании</Linker>
                 </Item>
                 <Item>
-                  <Linker>Press</Linker>
+                  <Linker>Пресса</Linker>
                 </Item>
                 <Item>
-                  <Linker>Tech details</Linker>
+                  <Linker>Разработчикам</Linker>
                 </Item>
               </List>
             </Left>
             <Right>
               <StyleLink to={'/'}>
                 <Logo />
-                <Title>Ducatur</Title>
+                <Title>Роспатент</Title>
               </StyleLink>
             </Right>
           </Inner>
           <Politics>
-            <Linker>Terms of use</Linker>
-            <Linker>Privacy policy</Linker>
+            <Linker>Условия использования</Linker>
+            <Linker>Информация о сайте</Linker>
           </Politics>
         </Wrapper>
       </Cont>
